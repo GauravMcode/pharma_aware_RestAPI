@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 
 app.get('/:searchTerm', medController.getMedInfo)
 
-const server = app.listen(3000);
+const server = app.listen(process.env.PORT || 3000);
 const io = require('./utils/socket').initIO(server);
 io.on('connection', (socket) => {
     socketId = socket.id;
