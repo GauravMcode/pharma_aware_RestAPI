@@ -1,0 +1,5 @@
+#ignore these files:
+/extra.js
+/nodemon.json
+/node_modules
+/pract.js
