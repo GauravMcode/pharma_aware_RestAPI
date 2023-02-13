@@ -48,11 +48,11 @@ exports.getMedInfo = async function (req, res, next) {
                 }
             }));
         }
-        if (!socket) {
-            console.log('Socket id undefined: Socket not connected')
-            res.redirect('/')
-            return;
-        }
+        // if (!socket) {
+        //     console.log('Socket id undefined: Socket not connected')
+        //     res.redirect('/')
+        //     return;
+        // }
         io.getIO().to(socketId).emit('medList', meds_1mg);
         await autoScroll(page); //scroll till half
 
@@ -73,10 +73,10 @@ exports.getMedInfo = async function (req, res, next) {
         console.log(err);
     }
 
-    if (!socketId) {
-        console.log('Socket id undefined: Socket not connected')
-        return;
-    }
+    // if (!socketId) {
+    //     console.log('Socket id undefined: Socket not connected')
+    //     return;
+    // }
     let medLinks = [];
     let toStop = false;
     socket.on('stopEmit', function (data) {
