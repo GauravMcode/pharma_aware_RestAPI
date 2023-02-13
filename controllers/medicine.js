@@ -7,10 +7,8 @@ const autoScroll = require('../utils/autoscroll')
 
 exports.getMedInfo = async function (req, res, next) {
     const socketId = req.socketId;
-    // var ns = io.getIO().of(namespace || "/");
     const sockets = await io.getIO().in(socketId).fetchSockets(); //get sockets of a socketId /*https://socket.io/docs/v4/server-instance/#fetchsockets*/
     const socket = sockets[0];
-    // console.log('socket is connected: ' + socket.connected());
     browser = await puppeteer.launch({
         headless: true,
         executablePath: '/usr/bin/chromium-browser',
@@ -22,7 +20,6 @@ exports.getMedInfo = async function (req, res, next) {
     });
     page = await browser.newPage();
     const medicineName = req.params.searchTerm;
-    // const MED_NO = process.env.MED_NO;
     console.log(`Searching for: ${medicineName}`);
     let meds_1mg = [];
     try {
@@ -48,11 +45,11 @@ exports.getMedInfo = async function (req, res, next) {
                 }
             }));
         }
-        // if (!socket) {
-        //     console.log('Socket id undefined: Socket not connected')
-        //     res.redirect('/')
-        //     return;
-        // }
+        if (!socket) {
+            console.log('Socket id undefined: Socket not connected')
+            res.redirect('/')
+            return;
+        }
         io.getIO().to(socketId).emit('medList', meds_1mg);
         await autoScroll(page); //scroll till half
 
@@ -73,10 +70,10 @@ exports.getMedInfo = async function (req, res, next) {
         console.log(err);
     }
 
-    // if (!socketId) {
-    //     console.log('Socket id undefined: Socket not connected')
-    //     return;
-    // }
+    if (!socketId) {
+        console.log('Socket id undefined: Socket not connected')
+        return;
+    }
     let medLinks = [];
     let toStop = false;
     socket.on('stopEmit', function (data) {
