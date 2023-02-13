@@ -10,11 +10,11 @@ async function autoScroll(page) {
                 window.scrollBy(0, distance);
                 totalHeight += distance;
 
-                if (totalHeight >= ((scrollHeight - window.innerHeight) / 2)) {
+                if (totalHeight >= ((scrollHeight - window.innerHeight))) {
                     clearInterval(timer);
                     resolve();
                 }
-            }, 20);
+            }, 30);
         });
     })
 }
